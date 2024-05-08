@@ -1,16 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Basic HTML Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple To-Do List</title>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Basic HTML Page</h1>
-    </header>
-    <main>
-        <p>This is a simple HTML page created by ChatGPT. It demonstrates the basic structure of an HTML document.</p>
-    </main>
+
+<h1>Simple To-Do List</h1>
+
+<input type="text" id="taskInput" placeholder="Enter a new task">
+<button onclick="addTask()">Add Task</button>
+
+<ul id="taskList"></ul>
+
+<script>
+// Array to store tasks
+let tasks = [];
+
+// Function to add a new task
+function addTask() {
+    const taskInput = document.getElementById("taskInput");
+    const taskText = taskInput.value.trim();
+
+    if (taskText !== "") {
+        tasks.push({ text: taskText, completed: false });
+        taskInput.value = "";
+        renderTasks();
+    }
+}
+
+// Function to render tasks
+function renderTasks() {
+    const taskList = document.getElementById("taskList");
+    taskList.innerHTML = "";
+
+    tasks.forEach((task, index) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = task.text;
+
+        if (task.completed) {
+            listItem.style.textDecoration = "line-through";
+        }
+
+        listItem.addEventListener("click", () => toggleTask(index));
+
+        taskList.appendChild(listItem);
+    });
+}
+
+// Function to toggle task completion status
+function toggleTask(index) {
+    tasks[index].completed = !tasks[index].completed;
+    renderTasks();
+}
+
+</script>
+
 </body>
 </html>
